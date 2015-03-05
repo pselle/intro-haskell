@@ -26,6 +26,20 @@ instance Show TrafficLight where
   show Yellow = "Proceed with caution"
   show Green = "VRRRROOOOOM"
 
+instance Eq TrafficLight where
+  Red == Red = True
+  Yellow == Yellow = True
+  Green == Green = True
+  _ == _ = False
+
 red :: TrafficLight
 red = Red
 
+data Tree a = Empty | Branch a (Tree a) (Tree a) deriving (Show, Eq)
+
+exampleTree :: Tree Int
+exampleTree = Branch 10 (Branch 1 Empty Empty) (Branch 2 Empty Empty)
+
+treeMap :: (a -> b) -> Tree a -> Tree b
+treeMap f Empty = Empty
+treeMap f (Branch a l r) = Branch (f a) (treeMap f l) (treeMap f r)
